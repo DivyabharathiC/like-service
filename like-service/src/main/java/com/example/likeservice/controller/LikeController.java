@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(path = "/postsOrComments")
@@ -25,6 +27,10 @@ public class LikeController {
         return new ResponseEntity<String>(likeService.deleteLike(likeId), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/{postOrCommentId}/likes/count")
+    public ResponseEntity<Integer> getCount(@PathVariable("postOrCommentId") String postOrCommentId) {
+        return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.ACCEPTED);
+    }
 
 
 }
