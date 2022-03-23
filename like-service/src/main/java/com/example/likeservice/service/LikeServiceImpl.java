@@ -25,5 +25,13 @@ public class LikeServiceImpl implements LikeService {
         return likeRepo.save(like);
     }
 
+    @Override
+    public String deleteLike(String likeId) {
+        likeRepo.deleteById(likeId);
+        return "successfully Deleted likeId "+likeId;
+    }
 
 }
+
+
+

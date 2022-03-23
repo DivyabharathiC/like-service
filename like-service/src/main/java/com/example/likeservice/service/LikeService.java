@@ -8,4 +8,6 @@ import org.springframework.stereotype.Service;
 public interface LikeService {
 
     Like createLike(String postOrCommentId, Like like);
+
+    String deleteLike(String likeId);
 }
