@@ -4,7 +4,11 @@ package com.example.likeservice.repo;
 import com.example.likeservice.model.Like;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface LikeRepo extends MongoRepository<Like, String> {
+import java.util.Collection;
+import java.util.List;
 
-   // Like findByPostOrCommentId(String postOrCommentId);
+public interface LikeRepo extends MongoRepository<Like, String> {
+//    List<Like> findByPostOrCommentId(String postOrCommentId);
+
+    // Like findByPostOrCommentId(String postOrCommentId);
 }
