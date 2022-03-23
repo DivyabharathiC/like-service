@@ -1,6 +1,7 @@
 package com.example.likeservice.service;
 
 import com.example.likeservice.model.Like;
+import com.example.likeservice.model.LikeDTO;
 import com.example.likeservice.repo.LikeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -43,6 +44,14 @@ public class LikeServiceImpl implements LikeService {
         query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
         List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
         return listOfLikes.size();
+    }
+
+    @Override
+    public List<Like> getLikesPage(String postOrCommentId) {
+        Query query = new Query();
+        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
+        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
+        return listOfLikes;
     }
 
 }

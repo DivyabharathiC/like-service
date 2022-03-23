@@ -3,19 +3,17 @@ package com.example.likeservice.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 
-
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "Like")
-public class Like {
-
-   @Id
+@Data
+@ToString
+public class LikeDTO {
+    @Id
     private String postOrCommentId;
     private  String likeId;
     private String likedBy;
