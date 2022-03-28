@@ -1,5 +1,6 @@
 package com.example.likeservice.service;
 
+import com.example.likeservice.Feign.UserFeignClient;
 import com.example.likeservice.model.Like;
 import com.example.likeservice.model.LikeDTO;
 import com.example.likeservice.repo.LikeRepo;
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,14 +24,21 @@ public class LikeServiceImpl implements LikeService {
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @Autowired
+    UserFeignClient userFeignClient;
+
 
     @Override
-    public Like createLike(String postOrCommentId, Like like) {
+    public LikeDTO createLike(String postOrCommentId, Like like) {
         like.setPostOrCommentId(postOrCommentId);
-        like.setLikeId(like.getLikeId());
-        like.setLikedBy(like.getLikedBy());
         like.setCreatedAt(LocalDateTime.now());
-        return likeRepo.save(like);
+        likeRepo.save(like);
+
+        LikeDTO likeDTO =new LikeDTO(like.getLikeId(),like.getPostOrCommentId(),
+                userFeignClient.getUser(like.getLikedBy()),
+                like.getCreatedAt());
+
+        return likeDTO;
     }
 
     @Override
@@ -47,12 +56,32 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<Like> getLikesPage(String postOrCommentId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
-        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
-        return listOfLikes;
+    public LikeDTO getLikePage(String likeId, String postOrCommentId) {
+        Like like = likeRepo.findById(likeId).get();
+
+        LikeDTO likeDTO=new LikeDTO(like.getLikeId(),like.getPostOrCommentId(),
+                userFeignClient.getUser(like.getLikedBy()),
+                like.getCreatedAt());
+
+        return likeDTO;
     }
+
+    @Override
+    public List<LikeDTO> getLikesPage(String postOrCommentId) {
+
+        List<Like> likes=likeRepo.findAll();
+        List<LikeDTO> likeDTOS = new ArrayList<>();
+        for(Like like:likes){
+            LikeDTO likeDTO=new LikeDTO(like.getLikeId(),like.getPostOrCommentId(),
+                    userFeignClient.getUser(like.getLikedBy()),
+                    like.getCreatedAt());
+
+            likeDTOS.add(likeDTO);
+        }
+        return  likeDTOS;
+    }
+
+
 
 }
 

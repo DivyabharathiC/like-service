@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value ="*")
 @RequestMapping(path = "/api/v1/postsOrComments")
 public class LikeController {
 
@@ -18,8 +19,8 @@ public class LikeController {
     LikeService likeService;
 
     @PostMapping(path= "/{postOrCommentId}/likes")
-    public ResponseEntity<Like> createLike(@PathVariable("postOrCommentId") String postOrCommentId, @RequestBody Like like){
-        return new ResponseEntity<Like>(likeService.createLike(postOrCommentId,like), HttpStatus.CREATED);
+    public ResponseEntity<LikeDTO> createLike(@PathVariable("postOrCommentId") String postOrCommentId, @RequestBody Like like){
+        return new ResponseEntity<LikeDTO>(likeService.createLike(postOrCommentId,like), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{postOrCommentId}/likes/{likeId}")
@@ -32,9 +33,14 @@ public class LikeController {
         return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.ACCEPTED);
     }
 
+    @GetMapping("/{postOrCommentId}/likes/{likeId}")
+    public  ResponseEntity<LikeDTO> getLikesPage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
+        return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.ACCEPTED);
+    }
+
     @GetMapping("/{postOrCommentId}/likes")
-    public  ResponseEntity<List<Like>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId){
-        return new ResponseEntity<List<Like>>(likeService.getLikesPage(postOrCommentId),HttpStatus.ACCEPTED);
+    public  ResponseEntity<List<LikeDTO>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId){
+        return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId),HttpStatus.ACCEPTED);
     }
 
 }

@@ -15,11 +15,10 @@ import java.time.LocalDateTime;
 @Document(collection = "Like")
 public class Like {
 
-   @Id
-    private String postOrCommentId;
+    @Id
     private  String likeId;
+    private String postOrCommentId;
     private String likedBy;
     private LocalDateTime createdAt;
-
 
 }

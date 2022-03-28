@@ -10,11 +10,13 @@ import java.util.List;
 @Service
 public interface LikeService {
 
-    Like createLike(String postOrCommentId, Like like);
+    LikeDTO createLike(String postOrCommentId, Like like);
 
     String deleteLike(String likeId);
 
     Integer getCount(String postOrCommentId);
 
-    List<Like> getLikesPage(String postOrCommentId);
+    List<LikeDTO> getLikesPage(String postOrCommentId);
+
+    LikeDTO getLikePage(String likeId, String postOrCommentId);
 }
