@@ -12,33 +12,33 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(value ="*")
-@RequestMapping(path = "/api/v1/postsOrComments")
+@RequestMapping(path = "/api/v1/postsOrComments/{postOrCommentId}/likes")
 public class LikeController {
 
     @Autowired
     LikeService likeService;
 
-    @PostMapping(path= "/{postOrCommentId}/likes")
+    @PostMapping(path= "")
     public ResponseEntity<LikeDTO> createLike(@PathVariable("postOrCommentId") String postOrCommentId, @RequestBody Like like){
         return new ResponseEntity<LikeDTO>(likeService.createLike(postOrCommentId,like), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{postOrCommentId}/likes/{likeId}")
+    @DeleteMapping("/{likeId}")
     public ResponseEntity<String> deleteLike(@PathVariable("likeId") String likeId,@PathVariable("postOrCommentId") String postOrCommentId ) {
         return new ResponseEntity<String>(likeService.deleteLike(likeId), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{postOrCommentId}/likes/count")
+    @GetMapping("/count")
     public ResponseEntity<Integer> getCount(@PathVariable("postOrCommentId") String postOrCommentId) {
         return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{postOrCommentId}/likes/{likeId}")
+    @GetMapping("/{likeId}")
     public  ResponseEntity<LikeDTO> getLikesPage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
         return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.ACCEPTED);
     }
 
-    @GetMapping("/{postOrCommentId}/likes")
+    @GetMapping("")
     public  ResponseEntity<List<LikeDTO>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId){
         return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId),HttpStatus.ACCEPTED);
     }
