@@ -1,6 +1,7 @@
 package com.example.likeservice.service;
 
 import com.example.likeservice.Feign.UserFeignClient;
+import com.example.likeservice.exception.LikeNotFoundException;
 import com.example.likeservice.model.Like;
 import com.example.likeservice.model.LikeDTO;
 import com.example.likeservice.repo.LikeRepo;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.likeservice.constant.Constant.LikeNotFound;
 
 
 @Service
@@ -57,13 +60,19 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public LikeDTO getLikePage(String likeId, String postOrCommentId) {
-        Like like = likeRepo.findById(likeId).get();
+        try {
+            Like like = likeRepo.findById(likeId).get();
 
-        LikeDTO likeDTO=new LikeDTO(like.getLikeId(),like.getPostOrCommentId(),
-                userFeignClient.getUser(like.getLikedBy()),
-                like.getCreatedAt());
+            LikeDTO likeDTO = new LikeDTO(like.getLikeId(), like.getPostOrCommentId(),
+                    userFeignClient.getUser(like.getLikedBy()),
+                    like.getCreatedAt());
 
-        return likeDTO;
+            return likeDTO;
+        }
+        catch (Exception e)
+        {
+            throw new LikeNotFoundException( LikeNotFound);
+        }
     }
 
     @Override
