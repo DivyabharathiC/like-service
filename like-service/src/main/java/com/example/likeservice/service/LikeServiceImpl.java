@@ -6,6 +6,9 @@ import com.example.likeservice.model.Like;
 import com.example.likeservice.model.LikeDTO;
 import com.example.likeservice.repo.LikeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.example.likeservice.constant.Constant.LikeNotFound;
 
@@ -52,10 +56,12 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Integer getCount(String postOrCommentId) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
-        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
-        return listOfLikes.size();
+//        Query query = new Query();
+//        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
+//        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
+//        return listOfLikes.size();
+        return likeRepo.findByPostOrCommentId(postOrCommentId).size();
+
     }
 
     @Override
@@ -76,9 +82,12 @@ public class LikeServiceImpl implements LikeService {
     }
 
     @Override
-    public List<LikeDTO> getLikesPage(String postOrCommentId) {
+    public List<LikeDTO> getLikesPage(String postOrCommentId,Integer page, Integer size) {
+        page = Optional.ofNullable(page).orElse(0);
+        size = Optional.ofNullable(size).orElse(10);
+        Pageable paging = PageRequest.of(page, size);
+        List<Like> likes = likeRepo.findByPostOrCommentId(postOrCommentId,paging);
 
-        List<Like> likes=likeRepo.findAll();
         List<LikeDTO> likeDTOS = new ArrayList<>();
         for(Like like:likes){
             LikeDTO likeDTO=new LikeDTO(like.getLikeId(),like.getPostOrCommentId(),

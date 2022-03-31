@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.QueryParam;
 import java.util.List;
 
 @Slf4j
@@ -48,9 +49,11 @@ public class LikeController {
     }
 
     @GetMapping("")
-    public  ResponseEntity<List<LikeDTO>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId){
+    public  ResponseEntity<List<LikeDTO>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId,
+                                                       @QueryParam(value = "page") Integer page,
+                                                       @QueryParam(value = "size") Integer size){
         logger.info("Starting of getLikesPage using postOrCommentId request from Like application");
-        return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId),HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId,page,size),HttpStatus.ACCEPTED);
     }
 
 }

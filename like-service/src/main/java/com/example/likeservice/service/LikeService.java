@@ -16,7 +16,9 @@ public interface LikeService {
 
     Integer getCount(String postOrCommentId);
 
-    List<LikeDTO> getLikesPage(String postOrCommentId);
+   
 
     LikeDTO getLikePage(String likeId, String postOrCommentId);
+
+    List<LikeDTO> getLikesPage(String postOrCommentId, Integer page, Integer size);
 }
