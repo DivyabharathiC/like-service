@@ -16,7 +16,7 @@ public class LikeServiceExceptionHandler extends ResponseEntityExceptionHandler 
 
 
     @ExceptionHandler({LikeNotFoundException.class})
-    ResponseEntity PostNotFoundException(Exception e, ServletWebRequest request) {
+    ResponseEntity likeServiceExceptionHandler(Exception e, ServletWebRequest request) {
         ApiError apiError = new ApiError();
         apiError.setStatus(HttpStatus.NOT_FOUND);
         apiError.setErrors(Arrays.asList(e.getMessage()));
