@@ -42,7 +42,7 @@ public class LikeController {
     }
 
     @GetMapping("/{likeId}")
-    public  ResponseEntity<LikeDTO> getLikesPage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
+    public  ResponseEntity<LikeDTO> getLikePage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
         logger.info("Starting of getLikesPage using like id request from Like application");
         return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.ACCEPTED);
     }

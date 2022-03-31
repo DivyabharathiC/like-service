@@ -11,11 +11,7 @@ r
 Blike-service/src/main/java/com/example/likeservice/model/Like.java,2\d\2def57cf77c52cc7aa621bfc332232f62760ea15
 u
 Elike-service/src/main/java/com/example/likeservice/model/LikeDTO.java,2\8\28758fc246e2fc725ae891350845dc43b75778d4
-{
-Klike-service/src/main/java/com/example/likeservice/service/LikeService.java,2\6\267f73db460776a01d3d8fc6cf4c2572e323bab9
 ~
 Nlike-service/src/main/java/com/example/likeservice/LikeServiceApplication.java,c\d\cdcf08584ed38c3f342528766996e15bb18fb368
 }
 Mlike-service/src/main/java/com/example/likeservice/Feign/UserFeignClient.java,e\9\e99ed592d8a94be7e91fd9908f5c026aa41ce28e
-
-Olike-service/src/main/java/com/example/likeservice/service/LikeServiceImpl.java,2\c\2ca47a5b48a8d5455fad8f4d860fad93f350fe8a
