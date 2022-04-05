@@ -5,5 +5,3 @@ D
 like-service/pom.xml,9\2\92a3cffbb943c741bd153cec130c49312a57127d
 ~
 Nlike-service/src/main/java/com/example/likeservice/LikeServiceApplication.java,c\d\cdcf08584ed38c3f342528766996e15bb18fb368
-}
-Mlike-service/src/main/java/com/example/likeservice/Feign/UserFeignClient.java,e\9\e99ed592d8a94be7e91fd9908f5c026aa41ce28e

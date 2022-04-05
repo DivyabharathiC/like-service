@@ -11,6 +11,6 @@ import java.util.List;
 
 public interface LikeRepo extends MongoRepository<Like, String> {
 
-    List<Like> findByPostOrCommentId(String postOrCommentId, Pageable paging);
-    List<Like> findByPostOrCommentId(String postOrCommentId);
+//    List<Like> findByPostOrCommentId(String postOrCommentId, Pageable paging);
+//    List<Like> findByPostOrCommentId(String postOrCommentId);
 }

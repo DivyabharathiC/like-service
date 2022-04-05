@@ -56,11 +56,11 @@ public class LikeServiceImpl implements LikeService {
 
     @Override
     public Integer getCount(String postOrCommentId) {
-//        Query query = new Query();
-//        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
-//        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
-//        return listOfLikes.size();
-        return likeRepo.findByPostOrCommentId(postOrCommentId).size();
+        Query query = new Query();
+        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
+        List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
+        return listOfLikes.size();
+       // return likeRepo.findByPostOrCommentId(postOrCommentId).size();
 
     }
 
@@ -85,8 +85,12 @@ public class LikeServiceImpl implements LikeService {
     public List<LikeDTO> getLikesPage(String postOrCommentId,Integer page, Integer size) {
         page = Optional.ofNullable(page).orElse(0);
         size = Optional.ofNullable(size).orElse(10);
-        Pageable paging = PageRequest.of(page, size);
-        List<Like> likes = likeRepo.findByPostOrCommentId(postOrCommentId,paging);
+
+        Pageable pageable = PageRequest.of(page, size);
+        Query query = new Query().with(pageable);
+        query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
+        List<Like> likes = mongoTemplate.find(query, Like.class);
+     //   List<Like> likes = likeRepo.findByPostOrCommentId(postOrCommentId,paging);
 
         List<LikeDTO> likeDTOS = new ArrayList<>();
         for(Like like:likes){
