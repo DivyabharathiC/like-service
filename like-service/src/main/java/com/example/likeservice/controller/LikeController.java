@@ -31,22 +31,10 @@ public class LikeController {
         return new ResponseEntity<LikeDTO>(likeService.createLike(postOrCommentId,like), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{likeId}")
-    public ResponseEntity<String> deleteLike(@PathVariable("likeId") String likeId,@PathVariable("postOrCommentId") String postOrCommentId ) {
-        logger.info("Starting of deleteLike request from Like application");
-        return new ResponseEntity<String>(likeService.deleteLike(likeId), HttpStatus.ACCEPTED);
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Integer> getCount(@PathVariable("postOrCommentId") String postOrCommentId) {
-        logger.info("Starting of getCountLike request from Like application");
-        return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.ACCEPTED);
-    }
-
     @GetMapping("/{likeId}")
     public  ResponseEntity<LikeDTO> getLikePage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
         logger.info("Starting of getLikesPage using like id request from Like application");
-        return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.ACCEPTED);
+        return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.OK);
     }
 
     @GetMapping("")
@@ -54,7 +42,19 @@ public class LikeController {
                                                        @QueryParam(value = "page") Integer page,
                                                        @QueryParam(value = "size") Integer size){
         logger.info("Starting of getLikesPage using postOrCommentId request from Like application");
-        return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId,page,size),HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId,page,size),HttpStatus.OK);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getCount(@PathVariable("postOrCommentId") String postOrCommentId) {
+        logger.info("Starting of getCountLike request from Like application");
+        return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{likeId}")
+    public ResponseEntity<String> deleteLike(@PathVariable("likeId") String likeId,@PathVariable("postOrCommentId") String postOrCommentId ) {
+        logger.info("Starting of deleteLike request from Like application");
+        return new ResponseEntity<String>(likeService.deleteLike(likeId), HttpStatus.OK);
     }
 
 }

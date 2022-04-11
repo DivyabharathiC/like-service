@@ -60,7 +60,7 @@ public class LikeServiceImpl implements LikeService {
         query.addCriteria(Criteria.where("postOrCommentId").is(postOrCommentId));
         List<Like> listOfLikes = mongoTemplate.find(query, Like.class);
         return listOfLikes.size();
-       // return likeRepo.findByPostOrCommentId(postOrCommentId).size();
+
 
     }
 
