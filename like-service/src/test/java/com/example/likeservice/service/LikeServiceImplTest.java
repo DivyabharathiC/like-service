@@ -81,10 +81,11 @@ class LikeServiceImplTest {
 
     @Test
     void getCount() {
+        Optional<Like> like = getOptionalRequest();
 
-//        List<Like> likes = getLikesByPostOrCommentId();
-//        Mockito.when(likeRepo.findById(likes.get(0).getPostOrCommentId())).thenReturn(likes.size());
-//        assertThat(likes.size());
+        List<Like> likes = getLikesByPostOrCommentId();
+        Mockito.when(likeRepo.findById(likes.get(0).getPostOrCommentId())).thenReturn(like);
+        assertEquals(likeRepo.findById(likes.get(0).getPostOrCommentId()),like);
 
     }
 
@@ -109,7 +110,7 @@ class LikeServiceImplTest {
     }
 
     private Optional<Like> getOptionalRequest() {
-        Optional<Like> like = Optional.of(new Like( "1000","100","9", LocalDateTime.now()));
+        Optional<Like> like = Optional.of(new Like( "10000","1000","9", LocalDateTime.now()));
 
 
 
@@ -128,7 +129,7 @@ class LikeServiceImplTest {
         lists.add(like);
 
         Like like1 = new Like();
-        like1.setLikeId("10000");
+        like1.setLikeId("10001");
         like1.setLikedBy(String.valueOf(response));
         like1.setPostOrCommentId("1000");
 
