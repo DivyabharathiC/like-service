@@ -18,26 +18,26 @@ import java.util.List;
 @Slf4j
 @RestController
 @CrossOrigin(value ="*")
-@RequestMapping(path = "/api/v1/postsOrComments")
+@RequestMapping(path = "/api/v1/postsOrComments/{postOrCommentId}/likes")
 public class LikeController {
 
     private static Logger logger = LoggerFactory.getLogger(LikeController.class);
     @Autowired
     LikeService likeService;
 
-    @PostMapping(path= "/{postOrCommentId}/likes")
+    @PostMapping(path= "")
     public ResponseEntity<LikeDTO> createLike(@PathVariable("postOrCommentId") String postOrCommentId, @RequestBody @Valid Like like){
         logger.info("Starting of createLike request from Like application");
         return new ResponseEntity<LikeDTO>(likeService.createLike(postOrCommentId,like), HttpStatus.CREATED);
     }
 
-    @GetMapping("/{postOrCommentId}/likes/{likeId}")
+    @GetMapping("/{likeId}")
     public  ResponseEntity<LikeDTO> getLikePage(@PathVariable("likeId") String likeId, @PathVariable("postOrCommentId") String postOrCommentId){
         logger.info("Starting of getLikesPage using like id request from Like application");
         return new ResponseEntity<LikeDTO>(likeService.getLikePage(likeId, postOrCommentId),HttpStatus.OK);
     }
 
-    @GetMapping("/{postOrCommentId}/likes")
+    @GetMapping("")
     public  ResponseEntity<List<LikeDTO>> getLikesPage(@PathVariable("postOrCommentId") String postOrCommentId,
                                                        @QueryParam(value = "page") Integer page,
                                                        @QueryParam(value = "size") Integer size){
@@ -45,13 +45,13 @@ public class LikeController {
         return new ResponseEntity<List<LikeDTO>>(likeService.getLikesPage(postOrCommentId,page,size),HttpStatus.OK);
     }
 
-    @GetMapping("/{postOrCommentId}/likes/count")
+    @GetMapping("/count")
     public ResponseEntity<Integer> getCount(@PathVariable("postOrCommentId") String postOrCommentId) {
         logger.info("Starting of getCountLike request from Like application");
         return new ResponseEntity<Integer>(likeService.getCount(postOrCommentId), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{postOrCommentId}/likes/{likeId}")
+    @DeleteMapping("/{likeId}")
     public ResponseEntity<String> deleteLike(@PathVariable("likeId") String likeId,@PathVariable("postOrCommentId") String postOrCommentId ) {
         logger.info("Starting of deleteLike request from Like application");
         return new ResponseEntity<String>(likeService.deleteLike(likeId), HttpStatus.OK);
